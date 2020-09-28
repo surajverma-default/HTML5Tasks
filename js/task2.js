@@ -18,7 +18,7 @@ class Stack {
     if (this.isEmpty()) return undefined
     let deleteItem = this.items[this.count - 1]
     this.customDelete(deleteItem)
-    // this.items.pop()
+    // this.items.pop() // can also use this in order to implement pop
     logIntoConsole(deleteItem + "is popped out of the stack")
     logIntoConsole("The size of the stack is : " + this.count.toString())
   }
