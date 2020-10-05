@@ -1,59 +1,44 @@
-// a program to understand closure how the function execute.
-first = function () {
-  message("start of first function")
-  var a = 12
+// for a better understanding a new program with use case of closure
 
-  var innerFirstFunction = function () {
-    message("innerFirstFunction Started")
-    a++
-    second(a)
-    message("The value is :" + a)
-    return message("innerFirstFunction returning")
+function nameWorker(firstName) {
+
+  //this is a closure. it has access to any local variable present in the nameWorker function.
+  function fullNameGenerator(lastName) {
+    message(firstName + " " + lastName)
   }
 
-  message("calling the inner function inside first function")
-  return innerFirstFunction
+  return fullNameGenerator
 }
 
-second = function (value) {
-  message("start of second function")
-  value++
+//this variable stores the reference to fullNameGenerator Function and also has the access to it's parent's parameter
+//even though the parent function is executed
+var fullName = nameWorker("Ronit")
 
-  var innerSecondFunction = function () {
-    message("innerSecondFunction Started")
-    value++
-    third(value)
-    message("The value is :" + value)
-    return message("innerSecondFunction returning")
+//And that is why we see a full name as it uses the parameter value of it's parent function.
+fullName("Sharma")
+
+//Same first name but different last name.
+fullName("Valmiki")
+
+nameWorker("Akhilesh")("Yadav") // this is another way of calling inner function but here the reference
+//is not stored anywhere.
+
+//Another example.
+
+function addNumbers(x) {
+  return function (y) {
+    message(x + y)
   }
-
-  message("calling the inner function inside second function")
-  return innerSecondFunction()
 }
 
-third = function (value) {
-  message("start of third function")
-  value++
+var addFirstTime = addNumbers(3)
+addFirstTime(23)
+addFirstTime(209)
 
-  var innerThirdFunction = function () {
-    message("innerThirdFunction Started")
-    message("that's too deep now, stop!")
-    value++
-    message("The value is :" + value)
-    return message("innerThirdFunction returning")
-  }
-
-  message("calling the inner function inside third function")
-  return innerThirdFunction()
-}
-
-
-//utility ---
+//so from these example we can understand that the state of the closure is maintained in the memory even though the parent
+//function is executed
 
 function message(text) {
   console.log(text)
 }
 
-
-var operate = first();
-operate();
